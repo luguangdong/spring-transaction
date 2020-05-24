@@ -15,19 +15,19 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--&lt;!&ndash; 配置事务通知 &ndash;&gt;
+    <!-- 配置事务通知 -->
     <tx:advice id="myAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
 
-    &lt;!&ndash; 配置顾问和切入点 &ndash;&gt;
+    <!-- 配置顾问和切入点 -->
     <aop:config>
         <aop:pointcut id="myPointcut" expression="execution(* com.luxiu.spring.transaction.service.*.*(..))" />
         <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointcut" />
-    </aop:config>-->
+    </aop:config>
 
     <!-- 开启事务注解驱动 -->
-   <!-- <tx:annotation-driven transaction-manager="transactionManager" />-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>
