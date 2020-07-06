@@ -13,7 +13,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * <p>
- * Description: 模拟异常 ransaction rolled back because it has been marked as rollback-only
+ * Description: 测试git合并部分代码
  *
  * </p>
  *
