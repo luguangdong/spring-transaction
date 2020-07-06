@@ -13,7 +13,8 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * <p>
- * Description:
+ * Description: 模拟异常 ransaction rolled back because it has been marked as rollback-only
+ *
  * </p>
  *
  * @author luguangdong
