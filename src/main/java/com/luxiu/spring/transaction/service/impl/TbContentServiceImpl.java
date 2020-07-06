@@ -5,6 +5,8 @@ import com.luxiu.spring.transaction.mapper.TbContentMapper;
 import com.luxiu.spring.transaction.service.TbContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * <p>
@@ -18,10 +20,14 @@ import org.springframework.stereotype.Service;
  * @company https://www.singlewindow.cn/
  */
 @Service
+@Transactional
 public class TbContentServiceImpl implements TbContentService {
     @Autowired
     private TbContentMapper tbContentMapper;
     public void save(TbContent tbContent) {
         tbContentMapper.insert(tbContent);
+        int i = 1/0;
+
+
     }
 }

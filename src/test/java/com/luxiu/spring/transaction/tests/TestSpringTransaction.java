@@ -29,6 +29,9 @@ public class TestSpringTransaction {
 
     @Resource(name = "TbContentCategoryServiceAnnotation")
     private TbContentCategoryService TbContentCategoryServiceAnnotation;
+
+    @Resource(name = "tbContentCategoryServiceRollbackOnly")
+    private TbContentCategoryService tbContentCategoryServiceRollbackOnly;
     /**
      * 测试说明: 使用配置文件的方式来测试spring的事物
      * <ur>
@@ -53,7 +56,7 @@ public class TestSpringTransaction {
     public void testTbContentCategoryServiceConf() {
         TbContentCategory tbContentCategory = new TbContentCategory();
         tbContentCategory.setId(1L);
-        tbContentCategory.setName("测试事务分类");
+        tbContentCategory.setName("测试事务分类123");
 
         TbContent tbContent = new TbContent();
         tbContent.setCategoryId(45L);
@@ -98,6 +101,25 @@ public class TestSpringTransaction {
         tbContent.setTitle("测试事务内容");
 
         TbContentCategoryServiceAnnotation.save(tbContentCategory, tbContent);
+    }
+
+
+    /**
+     * Spring事务嵌套引发的血案测试
+     * Transaction rolled back because it has been marked as rollback-only
+     */
+    @Test
+    public void testTbContentCategoryServiceByRollbackOnly() {
+        TbContentCategory tbContentCategory = new TbContentCategory();
+        tbContentCategory.setId(1L);
+        tbContentCategory.setName("测试事务分类20200706");
+
+        TbContent tbContent = new TbContent();
+        tbContent.setCategoryId(48L);
+        tbContent.setTbContentCategory(tbContentCategory);
+        // 在这里你可以将内容设置为超出数据库字段的存储范围来验证事务是否开启
+        tbContent.setTitle("测试事务内容20200706");
+        tbContentCategoryServiceRollbackOnly.save(tbContentCategory, tbContent);
     }
 
 
