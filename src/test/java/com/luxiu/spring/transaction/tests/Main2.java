@@ -12,4 +12,7 @@ package com.luxiu.spring.transaction.tests;
  * @company https://www.beyond.com/
  */
 public class Main2 {
+    public static void main(String[] args) {
+        System.out.println("2");
+    }
 }
