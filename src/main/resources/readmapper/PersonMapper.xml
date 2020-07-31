@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luxiu.spring.transaction.readmapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.luxiu.spring.transaction.domain.Person">
+    <!--@mbg.generated-->
+    <!--@Table PERSON-->
+    <id column="PID" jdbcType="DECIMAL" property="pid" />
+    <result column="PNAME" jdbcType="VARCHAR" property="pname" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    PID, PNAME, GENDER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from PERSON
+    where PID = #{pid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from PERSON
+    where PID = #{pid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.luxiu.spring.transaction.domain.Person">
+    <!--@mbg.generated-->
+    insert into PERSON (PID, PNAME, GENDER
+      )
+    values (#{pid,jdbcType=DECIMAL}, #{pname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luxiu.spring.transaction.domain.Person">
+    <!--@mbg.generated-->
+    insert into PERSON
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        PID,
+      </if>
+      <if test="pname != null">
+        PNAME,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luxiu.spring.transaction.domain.Person">
+    <!--@mbg.generated-->
+    update PERSON
+    <set>
+      <if test="pname != null">
+        PNAME = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luxiu.spring.transaction.domain.Person">
+    <!--@mbg.generated-->
+    update PERSON
+    set PNAME = #{pname,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR}
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+</mapper>
