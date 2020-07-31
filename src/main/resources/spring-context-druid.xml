@@ -83,16 +83,16 @@
                 <entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>
             </map>
         </property>
-        <property name="defaultTargetDataSource" ref="dynamicDataSource"></property>
+        <property name="defaultTargetDataSource" ref="dataSource"></property>
     </bean>
 
-   <!-- <bean id="dataSourceInterceptor" class="com.luxiu.spring.conf.datasource.DataSourceInterceptor"></bean>-->
+    <bean id="dataSourceInterceptor" class="com.luxiu.spring.conf.datasource.DataSourceInterceptor"></bean>
     <aop:config>
         <aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor">
             <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.transaction.mapper.*.*(..))" />
             <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.transaction.readmapper.*.*(..))" />
-            <aop:before pointcut-ref="daoOne" method="setdataSource" />
-            <aop:before pointcut-ref="daoTwo" method="setdataSourceTwo" />
+            <aop:before pointcut-ref="daoOne" method="setDataSource" />
+            <aop:before pointcut-ref="daoTwo" method="setDataSourceTwo" />
         </aop:aspect>
     </aop:config>
 

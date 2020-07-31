@@ -59,7 +59,7 @@ public class TestMybatis {
     @Test
     public void testTbContentInsertBackId2() {
         Person person = new Person();
-        person.setPid(1234L);
+        person.setPid(12345L);
         person.setPname("哈哈");
         person.setGender("1");
         personMapper.insert(person);
