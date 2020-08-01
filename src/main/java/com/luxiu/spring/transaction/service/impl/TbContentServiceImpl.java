@@ -27,7 +27,5 @@ public class TbContentServiceImpl implements TbContentService {
     public void save(TbContent tbContent) {
         tbContentMapper.insert(tbContent);
         //int i = 1/0;
-
-
     }
 }

@@ -87,21 +87,19 @@
     </bean>
 
     <!--利用aop，达到动态更改数据源的目的。当需要增加数据源的时候，我们只需要在spring-context-druid.xml配置文件中添加aop配置，新建个DataSourceInterceptor即可。而不需要更改任何代码。-->
-    <!--如果事务的拦截器配置在service层，那么切换数据源的拦截器DataSourceInterceptor就应该在service层-->
+    <!--如果事务的拦截器配置在service层，那么切换数据源的拦截器DataSourceInterceptor就应该在service层之上,这样在执行事务之前就已经选择数据源了-->
+    <!--何为service层之上,就是调用service层的方法,例如controller层,我们也可以自定义一层例如 manager 层 位于service层之上-->
     <bean id="dataSourceInterceptor" class="com.luxiu.spring.conf.datasource.DataSourceInterceptor"></bean>
     <aop:config>
         <aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor">
-            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.transaction.service.*.*(..))" />
-            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.transaction.readservice.*.*(..))" />
+           <!-- <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.transaction.mapper.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.transaction.readmapper.*.*(..))" />-->
+            <!--<aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.transaction.service.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.transaction.readservice.*.*(..))" />-->
+            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.transaction.manager.datasourceone.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.transaction.manager.datasourcetwo.*.*(..))" />
             <aop:before pointcut-ref="daoOne" method="setDataSource" />
             <aop:before pointcut-ref="daoTwo" method="setDataSourceTwo" />
         </aop:aspect>
     </aop:config>
-
-
-
-
-
-
-
 </beans>

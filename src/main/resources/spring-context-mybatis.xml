@@ -12,7 +12,7 @@
         <property name="mapperLocations">
             <array>
                 <value>classpath:/mapper/**/*.xml</value>
-                <value>classpath:/readmapper/**/*.xml</value>
+              <!--  <value>classpath:/readmapper/**/*.xml</value>-->
             </array>
         </property>
         <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
@@ -20,6 +20,7 @@
 
     <!-- 扫描 Mapper ,多个包则用","隔开-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.luxiu.spring.transaction.mapper,com.luxiu.spring.transaction.readmapper" />
+        <property name="basePackage" value="com.luxiu.spring.transaction.mapper" />
+        <!--<property name="basePackage" value="com.luxiu.spring.transaction.mapper,com.luxiu.spring.transaction.readmapper" />-->
     </bean>
 </beans>

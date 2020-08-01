@@ -1,4 +1,4 @@
-package com.luxiu.spring.transaction.readmapper;
+package com.luxiu.spring.transaction.mapper;
 
 import com.luxiu.spring.transaction.domain.Person;
 

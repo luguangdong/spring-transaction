@@ -2,7 +2,7 @@ package com.luxiu.spring.conf.datasource;
 
 /**
  * <p>
- * Description:
+ * Description: 设置具体数据源数
  * </p>
  *
  * @author luguangdong
@@ -17,6 +17,13 @@ public class DatabaseContextHolder {
      */
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
+    /**
+     *
+     * @param customerType
+     * 设置对应的数据源
+     * customerType 对应的值就是 spring-context-druid.xml 中  <entry value-ref="dataSource" key="dataSource"></entry> 中的 dataSource
+     *
+     */
     public static void setCustomerType(String customerType) {
         contextHolder.set(customerType);
     }

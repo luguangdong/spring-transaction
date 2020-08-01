@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * Description:
+ * Description: 使用AOP来动态切换数据源
+ *
  * </p>
  *
  * @author luguangdong

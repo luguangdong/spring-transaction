@@ -1,8 +1,8 @@
-package com.luxiu.spring.transaction.readservice.impl;
+package com.luxiu.spring.transaction.service.impl;
 
 import com.luxiu.spring.transaction.domain.Person;
-import com.luxiu.spring.transaction.readmapper.PersonMapper;
-import com.luxiu.spring.transaction.readservice.TbPersonService;
+import com.luxiu.spring.transaction.mapper.PersonMapper;
+import com.luxiu.spring.transaction.service.TbPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,10 @@
 package com.luxiu.spring.conf.datasource;
 
-import com.luxiu.spring.conf.datasource.DatabaseContextHolder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
  * <p>
- * Description:
+ * Description: 根据 DatabaseContextHolder 设置的数据源来获取数据源
  * </p>
  *
  * @author luguangdong
