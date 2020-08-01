@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.luxiu.spring.transaction.mapper.PersonMapper">
-  <resultMap id="BaseResultMap" type="com.luxiu.spring.transaction.domain.Person">
+<mapper namespace="com.luxiu.spring.mapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     <!--@Table PERSON-->
     <id column="PID" jdbcType="DECIMAL" property="pid" />
@@ -24,14 +24,14 @@
     delete from PERSON
     where PID = #{pid,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType="com.luxiu.spring.transaction.domain.Person">
+  <insert id="insert" parameterType="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     insert into PERSON (PID, PNAME, GENDER
       )
     values (#{pid,jdbcType=DECIMAL}, #{pname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.luxiu.spring.transaction.domain.Person">
+  <insert id="insertSelective" parameterType="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     insert into PERSON
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.luxiu.spring.transaction.domain.Person">
+  <update id="updateByPrimaryKeySelective" parameterType="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     update PERSON
     <set>
@@ -70,7 +70,7 @@
     </set>
     where PID = #{pid,jdbcType=DECIMAL}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.luxiu.spring.transaction.domain.Person">
+  <update id="updateByPrimaryKey" parameterType="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     update PERSON
     set PNAME = #{pname,jdbcType=VARCHAR},

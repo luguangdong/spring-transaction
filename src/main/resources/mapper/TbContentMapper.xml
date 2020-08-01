@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.luxiu.spring.transaction.mapper.TbContentMapper">
-  <resultMap id="BaseResultMap" type="com.luxiu.spring.transaction.domain.TbContent">
+<mapper namespace="com.luxiu.spring.mapper.TbContentMapper">
+  <resultMap id="BaseResultMap" type="com.luxiu.spring.domain.TbContent">
     <!--@mbg.generated-->
     <!--@Table tb_content-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -33,7 +33,7 @@
     delete from tb_content
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.luxiu.spring.transaction.domain.TbContent" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.luxiu.spring.domain.TbContent" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_content (category_id, title, sub_title, 
       title_desc, url, pic, 
@@ -44,7 +44,7 @@
       #{pic2,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{created,jdbcType=TIMESTAMP}, 
       #{updated,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.luxiu.spring.transaction.domain.TbContent" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.luxiu.spring.domain.TbContent" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_content
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -112,7 +112,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.luxiu.spring.transaction.domain.TbContent">
+  <update id="updateByPrimaryKeySelective" parameterType="com.luxiu.spring.domain.TbContent">
     <!--@mbg.generated-->
     update tb_content
     <set>
@@ -149,7 +149,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.luxiu.spring.transaction.domain.TbContent">
+  <update id="updateByPrimaryKey" parameterType="com.luxiu.spring.domain.TbContent">
     <!--@mbg.generated-->
     update tb_content
     set category_id = #{categoryId,jdbcType=BIGINT},
