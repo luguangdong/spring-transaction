@@ -26,6 +26,7 @@
         <oracle.version>11.2.0.3</oracle.version>
         <mybatis.version>3.2.8</mybatis.version>
         <mybaits-spring.version>1.3.1</mybaits-spring.version>
+        <pagehelper.version>5.1.10</pagehelper.version>
         <junit.version>4.12</junit.version>
         <lombok.version>1.16.18</lombok.version>
     </properties>
@@ -140,6 +141,14 @@
             <version>${spring.version}</version>
         </dependency>
         <!-- Database End -->
+
+        <!--PageHelper Start-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+        <!--PageHelper End-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>

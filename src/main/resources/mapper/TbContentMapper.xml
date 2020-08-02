@@ -179,6 +179,83 @@
     select count(*) from tb_content
     <where>
       <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=BIGINT}
+      </if>
+      <if test="title != null">
+        AND title LIKE concat('%',#{title,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="subTitle != null">
+        AND sub_title = #{subTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="titleDesc != null">
+        AND title_desc = #{titleDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null">
+        AND url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="pic != null">
+        AND pic = #{pic,jdbcType=VARCHAR}
+      </if>
+      <if test="pic2 != null">
+        AND pic2 = #{pic2,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null">
+        AND content = #{content,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="created != null">
+        AND created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updated != null">
+        AND updated = #{updated,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPageOnCondition" parameterType="com.luxiu.spring.domain.TbContent" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from tb_content
+      <where>
+        <if test="categoryId != null">
+          category_id = #{categoryId,jdbcType=BIGINT}
+        </if>
+        <if test="title != null">
+          AND title LIKE concat('%',#{title,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="subTitle != null">
+          AND sub_title = #{subTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="titleDesc != null">
+          AND title_desc = #{titleDesc,jdbcType=VARCHAR}
+        </if>
+        <if test="url != null">
+          AND url = #{url,jdbcType=VARCHAR}
+        </if>
+        <if test="pic != null">
+          AND pic = #{pic,jdbcType=VARCHAR}
+        </if>
+        <if test="pic2 != null">
+          AND pic2 = #{pic2,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+          AND content = #{content,jdbcType=LONGVARCHAR}
+        </if>
+        <if test="created != null">
+          AND created = #{created,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updated != null">
+          AND updated = #{updated,jdbcType=TIMESTAMP}
+        </if>
+      </where>
+      limit #{pageNumber,jdbcType=DECIMAL},#{pageSize,jdbcType=DECIMAL}
+    </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_content
+    <where>
+      <if test="categoryId != null">
         category_id = #{categoryId,jdbcType=BIGINT},
       </if>
       <if test="title != null">
@@ -210,44 +287,5 @@
       </if>
     </where>
   </select>
-
-  <select id="findByPageOnCondition" parameterType="com.luxiu.spring.domain.TbContent" resultMap="BaseResultMap">
-      select
-      <include refid="Base_Column_List" />
-      from tb_content
-      <where>
-        <if test="categoryId != null">
-          category_id = #{categoryId,jdbcType=BIGINT},
-        </if>
-        <if test="title != null">
-          AND title LIKE concat('%',#{title,jdbcType=VARCHAR},'%')
-        </if>
-        <if test="subTitle != null">
-          AND sub_title = #{subTitle,jdbcType=VARCHAR},
-        </if>
-        <if test="titleDesc != null">
-          AND title_desc = #{titleDesc,jdbcType=VARCHAR},
-        </if>
-        <if test="url != null">
-          AND url = #{url,jdbcType=VARCHAR},
-        </if>
-        <if test="pic != null">
-          AND pic = #{pic,jdbcType=VARCHAR},
-        </if>
-        <if test="pic2 != null">
-          AND pic2 = #{pic2,jdbcType=VARCHAR},
-        </if>
-        <if test="content != null">
-          AND content = #{content,jdbcType=LONGVARCHAR},
-        </if>
-        <if test="created != null">
-          AND created = #{created,jdbcType=TIMESTAMP},
-        </if>
-        <if test="updated != null">
-          AND updated = #{updated,jdbcType=TIMESTAMP},
-        </if>
-      </where>
-      limit #{pageNumber,jdbcType=DECIMAL},#{pageSize,jdbcType=DECIMAL}
-    </select>
 
 </mapper>

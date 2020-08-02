@@ -3,7 +3,8 @@ import java.util.Date;
 import java.util.List;
 
 
-import com.luxiu.spring.conf.page.Pagination;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.luxiu.spring.domain.Person;
 
 import com.luxiu.spring.domain.TbContent;
@@ -107,7 +108,7 @@ public class TestMyBatis {
     @Test
     public void testMySqlSelectByPageOnCondition() {
         TbContent tbContent = new TbContent();
-        tbContent.setTitle("a");
+        tbContent.setSubTitle("主题1");
         // 每页条数
         Integer pageSize=3;
         //当前页码从1开始
@@ -156,9 +157,9 @@ public class TestMyBatis {
         person.setPname("哈哈1");
         person.setGender("1");
         // 每页条数
-        Integer pageSize=3;
+        Integer pageSize=2;
         //当前页码从1开始
-        Integer pageNumber =1;
+        Integer pageNumber =2;
 
         Integer begin= (pageNumber - 1) * pageSize + 1;
         Integer end= (pageNumber * pageSize);
@@ -171,6 +172,42 @@ public class TestMyBatis {
         System.out.println(page);
     }
 
+
+    /**
+     *  MySql中使用PageHelper分页带条件动态查询
+     */
+    @Test
+    public void testMySqlSelectByPageOnPageHelper() {
+        TbContent tbContent = new TbContent();
+        //tbContent.setTitle("a");
+        Integer pageSize=2;
+        Integer pageNumber =2;
+        //执行count(*)操作
+        PageHelper.startPage(pageNumber,pageSize,true);
+        List<TbContent> pages = tbContentMapper.findAll(tbContent);
+        PageInfo pageInfo = new PageInfo(pages);
+        System.out.println("总条数："+pageInfo.getTotal());
+        System.out.println("分页结果："+pageInfo.getList());
+    }
+
+
+    /**
+     *  Oracle中使用PageHelper分页带条件动态查询
+     */
+    @Test
+    public void testOracleSelectByPageOnPageHelper() {
+        Person person = new Person();
+       person.setPname("哈哈1");
+        person.setGender("1");
+        Integer pageSize=2;
+        Integer pageNumber =2;
+        //执行count(*)操作
+        PageHelper.startPage(pageNumber,pageSize,true);
+        List<Person> page = personMapper.findAll(person);
+        PageInfo pageInfo = new PageInfo(page);
+        System.out.println("总条数："+pageInfo.getTotal());
+        System.out.println("分页结果："+pageInfo.getList());
+    }
 
 
 }

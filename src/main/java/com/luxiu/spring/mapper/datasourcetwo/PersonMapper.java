@@ -36,4 +36,7 @@ public interface PersonMapper {
     Long findTotalCountOnCondition(Person record);
 
     List<Person> findByPageOnCondition(Person record);
+
+    List<Person> findAll(Person person);
+
 }

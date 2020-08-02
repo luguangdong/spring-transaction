@@ -131,5 +131,21 @@
     where <![CDATA[ rownum <= #{pageSize,jdbcType=DECIMAL}]]>) t2
     where <![CDATA[t2.rn >= #{pageNumber,jdbcType=DECIMAL}]]>
   </select>
+    <select id="findAll" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from person
+      <where>
+        <if test="pid != null">
+          pid = #{pid,jdbcType=DECIMAL}
+        </if>
+        <if test="pname != null">
+          and pname = #{pname,jdbcType=VARCHAR}
+        </if>
+        <if test="gender != null">
+          and gender = #{gender,jdbcType=VARCHAR}
+        </if>
+      </where>
+    </select>
 
 </mapper>

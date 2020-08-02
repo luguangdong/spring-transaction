@@ -31,6 +31,8 @@ public interface TbContentMapper {
 
     int updateByPrimaryKey(TbContent record);
 
+    List<TbContent> findAll(TbContent record);
+
     Long findTotalCount();
 
     List<TbContent> findByPage(TbContent record);

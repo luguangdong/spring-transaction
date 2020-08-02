@@ -16,6 +16,23 @@
             </array>
         </property>
         <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+
+        <!--配置mybatis 插件 -->
+        <property name="plugins">
+            <set>
+                <!--配置pageHelper 分页插件-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <!--方言：-->
+                           <!-- <prop key="helperDialect">mysql</prop>-->
+                            <!--根据具体的查询语句动态切换方言-->
+                            <prop key="autoRuntimeDialect">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </set>
+        </property>
     </bean>
 
     <!-- 扫描 Mapper ,多个包则用","隔开-->
