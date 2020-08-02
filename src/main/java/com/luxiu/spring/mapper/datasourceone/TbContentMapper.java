@@ -1,6 +1,9 @@
-package com.luxiu.spring.mapper;
+package com.luxiu.spring.mapper.datasourceone;
 
+import com.luxiu.spring.conf.page.Pagination;
 import com.luxiu.spring.domain.TbContent;
+
+import java.util.List;
 
 
 /**
@@ -27,4 +30,12 @@ public interface TbContentMapper {
     int updateByPrimaryKeySelective(TbContent record);
 
     int updateByPrimaryKey(TbContent record);
+
+    Long findTotalCount();
+
+    List<TbContent> findByPage(TbContent record);
+
+    Long findTotalCountOnCondition(TbContent record);
+
+    List<TbContent> findByPageOnCondition(TbContent record);
 }

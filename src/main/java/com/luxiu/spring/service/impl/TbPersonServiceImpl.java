@@ -1,7 +1,7 @@
 package com.luxiu.spring.service.impl;
 
 import com.luxiu.spring.domain.Person;
-import com.luxiu.spring.mapper.PersonMapper;
+import com.luxiu.spring.mapper.datasourcetwo.PersonMapper;
 import com.luxiu.spring.service.TbPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

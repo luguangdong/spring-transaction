@@ -1,7 +1,7 @@
 package com.luxiu.spring.service.impl;
 
 import com.luxiu.spring.domain.TbContent;
-import com.luxiu.spring.mapper.TbContentMapper;
+import com.luxiu.spring.mapper.datasourceone.TbContentMapper;
 import com.luxiu.spring.service.TbContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

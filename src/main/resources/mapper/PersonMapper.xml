@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.luxiu.spring.mapper.PersonMapper">
+<mapper namespace="com.luxiu.spring.mapper.datasourcetwo.PersonMapper">
   <resultMap id="BaseResultMap" type="com.luxiu.spring.domain.Person">
     <!--@mbg.generated-->
     <!--@Table PERSON-->
@@ -25,6 +25,9 @@
     where PID = #{pid,jdbcType=DECIMAL}
   </delete>
   <insert id="insert" parameterType="com.luxiu.spring.domain.Person">
+    <selectKey resultType="java.lang.Long" keyProperty="pid" order="BEFORE">
+      SELECT LUXIU_PERSON_PID_SEQUENCE.NEXTVAL  FROM DUAL
+    </selectKey>
     <!--@mbg.generated-->
     insert into PERSON (PID, PNAME, GENDER
       )
@@ -32,6 +35,10 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.luxiu.spring.domain.Person">
+    <selectKey keyProperty="pid" order="BEFORE" resultType="java.lang.Long">
+      <!--SELECT 'PES'||TO_CHAR(SYSDATE,'YYYYMMDD')||LPAD(LUXIU_PERSON_PID_SEQUENCE.Nextval, 10, '0') FROM DUAL-->
+      SELECT TO_CHAR(SYSDATE,'YYYYMMDD')||LPAD(LUXIU_PERSON_PID_SEQUENCE.Nextval, 10, '0') FROM DUAL
+    </selectKey>
     <!--@mbg.generated-->
     insert into PERSON
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -77,4 +84,52 @@
       GENDER = #{gender,jdbcType=VARCHAR}
     where PID = #{pid,jdbcType=DECIMAL}
   </update>
+
+
+  <select id="findTotalCount" resultType="long">
+    select count(*) from PERSON
+  </select>
+
+  <select id="findByPage"  parameterType="com.luxiu.spring.domain.Person" resultType="com.luxiu.spring.domain.Person">
+    select <include refid="Base_Column_List" /> from(
+    select rownum rn,<include refid="Base_Column_List" /> from person p where <![CDATA[ rownum <= #{pageSize,jdbcType=DECIMAL}]]> ) pa
+    where <![CDATA[pa.rn >= #{pageNumber,jdbcType=DECIMAL}]]>
+  </select>
+
+
+  <select id="findTotalCountOnCondition" parameterType="com.luxiu.spring.domain.Person" resultType="long">
+    select count(*) from PERSON
+    <where>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=DECIMAL}
+      </if>
+      <if test="pname != null">
+        and pname = #{pname,jdbcType=VARCHAR}
+      </if>
+      <if test="gender != null">
+        and gender = #{gender,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPageOnCondition" parameterType="com.luxiu.spring.domain.Person" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from(
+    select rownum rn,<include refid="Base_Column_List" /> from(
+    select <include refid="Base_Column_List" /> from person
+    <where>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=DECIMAL}
+      </if>
+      <if test="pname != null">
+        and pname = #{pname,jdbcType=VARCHAR}
+      </if>
+      <if test="gender != null">
+        and gender = #{gender,jdbcType=VARCHAR}
+      </if>
+    </where>
+    ) t1
+    where <![CDATA[ rownum <= #{pageSize,jdbcType=DECIMAL}]]>) t2
+    where <![CDATA[t2.rn >= #{pageNumber,jdbcType=DECIMAL}]]>
+  </select>
+
 </mapper>

@@ -1,4 +1,4 @@
-package com.luxiu.spring.mapper;
+package com.luxiu.spring.mapper.datasourceone;
 
 import com.luxiu.spring.domain.TbContentCategory;
 

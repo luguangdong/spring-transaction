@@ -1,6 +1,9 @@
-package com.luxiu.spring.mapper;
+package com.luxiu.spring.mapper.datasourcetwo;
 
+import com.luxiu.spring.conf.page.Pagination;
 import com.luxiu.spring.domain.Person;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,4 +28,12 @@ public interface PersonMapper {
     int updateByPrimaryKeySelective(Person record);
 
     int updateByPrimaryKey(Person record);
+
+    Long findTotalCount();
+
+    List<Person> findByPage(Person record);
+
+    Long findTotalCountOnCondition(Person record);
+
+    List<Person> findByPageOnCondition(Person record);
 }

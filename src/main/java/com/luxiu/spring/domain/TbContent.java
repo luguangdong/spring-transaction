@@ -66,4 +66,9 @@ public class TbContent implements Serializable {
     private TbContentCategory tbContentCategory;
 
     private static final long serialVersionUID = 1L;
+
+    // 当前页码从1开始
+    private Integer pageNumber;
+    // 每页条数
+    private Integer pageSize;
 }

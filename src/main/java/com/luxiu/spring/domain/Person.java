@@ -20,4 +20,9 @@ public class Person {
     private String pname;
 
     private String gender;
+
+    // 当前页码从1开始
+    private Integer pageNumber;
+    // 每页条数
+    private Integer pageSize;
 }
