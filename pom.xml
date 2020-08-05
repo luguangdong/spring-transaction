@@ -17,6 +17,7 @@
         <java.version>1.8</java.version>
 
         <!-- 统一的依赖管理 -->
+        <servlet-api.version>3.1.0</servlet-api.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
         <spring.version>4.3.14.RELEASE</spring.version>
@@ -27,23 +28,23 @@
         <mybatis.version>3.2.8</mybatis.version>
         <mybaits-spring.version>1.3.1</mybaits-spring.version>
         <pagehelper.version>5.1.10</pagehelper.version>
+        <jta.version>1.1</jta.version>
+        <atomikos.version>4.0.6</atomikos.version>
         <junit.version>4.12</junit.version>
         <lombok.version>1.16.18</lombok.version>
+        <hutool.version>5.3.5</hutool.version>
+        <joda-time.version>2.10.6</joda-time.version>
     </properties>
 
     <dependencies>
-        <!-- Test Begin -->
+        <!-- Servlet Begin -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
-        <!-- Test Begin -->
+        <!-- Servlet End -->
 
         <!-- Spring Begin -->
         <dependency>
@@ -142,6 +143,19 @@
         </dependency>
         <!-- Database End -->
 
+        <!--JTA START-->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>${jta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jdbc</artifactId>
+            <version>${atomikos.version}</version>
+        </dependency>
+        <!--JTA END-->
+
         <!--PageHelper Start-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -150,11 +164,37 @@
         </dependency>
         <!--PageHelper End-->
 
+        <!-- Test Begin -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <!-- Test Begin -->
+
+
+        <!--Utils Begin-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+        </dependency>
+        <!--Utils End-->
     </dependencies>
 
 

@@ -7,73 +7,10 @@
     <!-- 加载配置属性文件 -->
     <context:property-placeholder ignore-unresolvable="true" location="classpath:jdbc.properties"/>
 
-    <!-- 数据源配置, 使用 Druid 数据库连接池 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
-        <property name="driverClassName" value="${jdbc.driverClass}"/>
-
-        <!-- 基本属性 url、user、password -->
-        <property name="url" value="${jdbc.connectionURL}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-
-        <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="${jdbc.pool.init}"/>
-        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
-        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
-
-        <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="60000"/>
-
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="300000"/>
-
-        <property name="validationQuery" value="${jdbc.testSql}"/>
-        <property name="testWhileIdle" value="true"/>
-        <property name="testOnBorrow" value="false"/>
-        <property name="testOnReturn" value="false"/>
-
-        <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat"/>
-    </bean>
-
-
-    <bean id="dataSourceTwo" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
-        <property name="driverClassName" value="${jdbc2.driverClass}"/>
-
-        <!-- 基本属性 url、user、password -->
-        <property name="url" value="${jdbc2.connectionURL}"/>
-        <property name="username" value="${jdbc2.username}"/>
-        <property name="password" value="${jdbc2.password}"/>
-
-        <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="${jdbc.pool.init}"/>
-        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
-        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
-
-        <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="60000"/>
-
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="300000"/>
-
-        <property name="validationQuery" value="${jdbc.testSql}"/>
-        <property name="testWhileIdle" value="true"/>
-        <property name="testOnBorrow" value="false"/>
-        <property name="testOnReturn" value="false"/>
-
-        <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat"/>
-    </bean>
-
-
+                                                        <!-- #===============================================#-->
+                                                        <!-- #==========DynamicDataSource settings===========#-->
+                                                        <!-- #===============================================#-->
+    <!--********************************************************* DynamicDataSource多数据源动态切换配置 START *********************************************************-->
     <bean id="dynamicDataSource" class="com.luxiu.spring.conf.datasource.DynamicDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
@@ -85,6 +22,13 @@
         </property>
         <property name="defaultTargetDataSource" ref="dataSource"></property>
     </bean>
+    <!--********************************************************* DynamicDataSource多数据源动态切换配置 END *********************************************************-->
+
+
+                                                            <!-- #===============================================#-->
+                                                            <!-- #========DataSourceInterceptor settings=========#-->
+                                                            <!-- #===============================================#-->
+    <!--********************************************************* DataSourceInterceptor多数据源动态切换AOP配置 START *********************************************************-->
 
     <!--利用aop，达到动态更改数据源的目的。当需要增加数据源的时候，我们只需要在spring-context-druid.xml配置文件中添加aop配置，新建个DataSourceInterceptor即可。而不需要更改任何代码。-->
     <!--如果事务的拦截器配置在service层，那么切换数据源的拦截器DataSourceInterceptor就应该在service层之上,这样在执行事务之前就已经选择数据源了-->
@@ -92,14 +36,120 @@
     <bean id="dataSourceInterceptor" class="com.luxiu.spring.conf.datasource.DataSourceInterceptor"></bean>
     <aop:config>
         <aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor">
-            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.mapper.datasourceone.*.*(..))" />
-            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.mapper.datasourcetwo.*.*(..))" />
-            <!--<aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.service.*.*(..))" />
-            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.readservice.*.*(..))" />-->
-           <!-- <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.manager.datasourceone.*.*(..))" />
-            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.manager.datasourcetwo.*.*(..))" />-->
+            <!--<aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.mapper.datasourceone.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.mapper.datasourcetwo.*.*(..))" />-->
+            <!-- <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.service.*.*(..))" />
+             <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.readservice.*.*(..))" />-->
+            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.manager.datasourceone.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.manager.datasourcetwo.*.*(..))" />
             <aop:before pointcut-ref="daoOne" method="setDataSource" />
             <aop:before pointcut-ref="daoTwo" method="setDataSourceTwo" />
         </aop:aspect>
     </aop:config>
+    <!--********************************************************* DataSourceInterceptor多数据源动态切换AOP配置 END *********************************************************-->
+
+                                                <!-- #===============================================#-->
+                                                <!-- #=======DruidDataSource POOL settings===========#-->
+                                                <!-- #===============================================#-->
+    <!--********************************************************* DruidDataSource多数据源配置 START *********************************************************-->
+  <!--  &lt;!&ndash; 数据源配置, 使用 Druid 数据库连接池 &ndash;&gt;
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        &lt;!&ndash; 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass &ndash;&gt;
+        <property name="driverClassName" value="${jdbc.driverClass}"/>
+        &lt;!&ndash; 基本属性 url、user、password &ndash;&gt;
+        <property name="url" value="${jdbc.connectionURL}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        &lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;
+        <property name="initialSize" value="${jdbc.pool.init}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        &lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;
+        <property name="maxWait" value="60000"/>
+        &lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        &lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="${jdbc.testSql}"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        &lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;
+        <property name="filters" value="stat"/>
+    </bean>
+    <bean id="dataSourceTwo" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        &lt;!&ndash; 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass &ndash;&gt;
+        <property name="driverClassName" value="${jdbc2.driverClass}"/>
+        &lt;!&ndash; 基本属性 url、user、password &ndash;&gt;
+        <property name="url" value="${jdbc2.connectionURL}"/>
+        <property name="username" value="${jdbc2.username}"/>
+        <property name="password" value="${jdbc2.password}"/>
+        &lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;
+        <property name="initialSize" value="${jdbc.pool.init}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        &lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;
+        <property name="maxWait" value="60000"/>
+        &lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        &lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="${jdbc.testSql}"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        &lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;
+        <property name="filters" value="stat"/>
+    </bean>-->
+    <!--********************************************************* DruidDataSource多数据源配置 END *********************************************************-->
+
+
+
+                                                <!-- #===============================================#-->
+                                                <!-- #=======AtomikosDataSource POOL settings========#-->
+                                                <!-- #===============================================#-->
+
+    <!--********************************************************* AtomikosDataSource多数据源配置 START *********************************************************-->
+    <!--配置抽象XA数据源属性-->
+    <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close" abstract="true">
+        <property name="poolSize" value="10" />
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="30"/>
+        <property name="borrowConnectionTimeout" value="60"/>  <!--获取连接失败重新获等待最大时间，在这个时间内如果有可用连接，将返回-->
+        <property name="reapTimeout" value="20"/> <!--最大获取数据时间，如果不设置这个值，Atomikos使用默认的5分钟，那么在处理大批量数据读取的时候，一旦超过5分钟，就会抛出类似 Resultset is close 的错误.-->
+        <property name="maxIdleTime" value="60"/>    <!--最大闲置时间，超过最小连接池连接的连接将将关闭-->
+        <property name="maintenanceInterval" value="60" />  <!--连接回收时间-->
+        <property name="loginTimeout" value="60" />     <!--java数据库连接池，最大可等待获取datasouce的时间-->
+        <property name="logWriter" value="60"/>
+        <property name="testQuery">
+            <value>SELECT 'x' FROM DUAL</value>
+        </property>
+    </bean>
+    <!--配置数据源-->
+    <bean id="dataSource" parent="abstractXADataSource">
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <property name="uniqueResourceName" value="dataSource"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="user">root</prop>
+                <prop key="password">123456</prop>
+                <prop key="URL">${jdbc.connectionURL}</prop>
+            </props>
+        </property>
+    </bean>
+    <!--配置数据源-->
+    <bean id="dataSourceTwo" parent="abstractXADataSource">
+        <property name="xaDataSourceClassName" value="oracle.jdbc.xa.client.OracleXADataSource" />
+        <property name="uniqueResourceName" value="dataSourceTwo"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="user">luxiu</prop>
+                <prop key="password">123456</prop>
+                <prop key="URL">${jdbc2.connectionURL}</prop>
+            </props>
+        </property>
+    </bean>
+    <!--********************************************************* AtomikosDataSource多数据源配置 END *********************************************************-->
+
 </beans>

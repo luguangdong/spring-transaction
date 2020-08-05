@@ -2,6 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+                                                    <!-- #===============================================#-->
+                                                    <!-- #==========sqlSessionFactory settings===========#-->
+                                                    <!-- #===============================================#-->
+    <!--********************************************************* sqlSessionFactory会话工厂配置 START *********************************************************-->
     <!-- 配置 SqlSession -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dynamicDataSource"/>
@@ -16,7 +21,6 @@
             </array>
         </property>
         <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
-
         <!--配置mybatis 插件 -->
         <property name="plugins">
             <set>
@@ -34,10 +38,10 @@
             </set>
         </property>
     </bean>
-
     <!-- 扫描 Mapper ,多个包则用","隔开-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.luxiu.spring.mapper" />
         <!--<property name="basePackage" value="com.luxiu.spring.mapper,com.luxiu.spring.readmapper" />-->
     </bean>
+    <!--********************************************************* sqlSessionFactory会话工厂配置 END *********************************************************-->
 </beans>

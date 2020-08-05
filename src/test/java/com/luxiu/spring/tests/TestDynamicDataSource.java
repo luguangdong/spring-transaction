@@ -14,7 +14,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 import java.util.Date;
 
 /**
@@ -167,18 +170,65 @@ public class TestDynamicDataSource {
      */
     @Test
     public void testTransactionManager() {
-        Person person = new Person();
-        person.setPid(123458L);
-        person.setPname("哈哈");
-        person.setGender("1");
-        personManager.save(person);
+            Person person = new Person();
+            person.setPid(123458L);
+            person.setPname("哈哈");
+            person.setGender("1");
+            personManager.save(person);
 
-        TbContent tbContent = new TbContent();
-        tbContent.setCategoryId(89L);
-        tbContent.setTitle("主题");
-        tbContent.setContent("内容");
-        tbContent.setCreated(new Date());
-        tbContent.setUpdated(new Date());
-        contentManager.save(tbContent);
+            TbContent tbContent = new TbContent();
+            tbContent.setCategoryId(89L);
+            tbContent.setTitle("主题");
+            tbContent.setContent("内容");
+            tbContent.setCreated(new Date());
+            tbContent.setUpdated(new Date());
+            contentManager.save(tbContent);
+    }
+
+    @Autowired
+    JtaTransactionManager jtaTransactionManager;
+
+    /**
+     * 使用动态切换数据源,切割点配置在manager层  <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.manager.datasourceone.*.*(..))" />
+     * DataSourceInterceptor 拦截器切点拦截的方法是 manager层
+     * 测试单个插入成功
+     *
+     * https://mp.weixin.qq.com/s?src=11&timestamp=1596505860&ver=2501&signature=EfBXgsfy-YjFuMD08wVOHr0QwRV4Cxc3JShggx49P6HE083DWa85ziMd4vxFW-EyfH4PW02WsJRBQGKmGbDUdpTS6FtXcu*r9*9JbjZusO9qoPhpCLHWVh4pGTSHrhk5&new=1
+     */
+    @Test
+    public void testTransactionManager1() {
+        //获取事务
+        UserTransaction userTransaction=jtaTransactionManager.getUserTransaction();
+        try {
+            //开启事务
+            userTransaction.begin();
+
+            Person person = new Person();
+            person.setPid(123458L);
+            person.setPname("哈哈");
+            person.setGender("1");
+            personManager.save(person);
+
+            TbContent tbContent = new TbContent();
+            tbContent.setCategoryId(89L);
+            tbContent.setTitle("主题");
+            tbContent.setContent("内容");
+            tbContent.setCreated(new Date());
+            tbContent.setUpdated(new Date());
+            contentManager.save(tbContent);
+
+            //事务提交
+            userTransaction.commit();
+
+        } catch (Exception e) {
+            //事务回滚
+            try {
+                userTransaction.rollback();
+            } catch (SystemException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
     }
 }
