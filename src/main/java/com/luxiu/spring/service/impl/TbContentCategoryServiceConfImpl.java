@@ -21,12 +21,16 @@ import org.springframework.stereotype.Service;
  */
 @Service(value = "TbContentCategoryServiceConf")
 class TbContentCategoryServiceConfImpl implements TbContentCategoryService {
-    @Autowired
-    private TbContentCategoryMapper tbContentCategoryMapper;
-    @Autowired
-    private TbContentService tbContentService;
-    public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
-        tbContentCategoryMapper.insert(tbContentCategory);
-        tbContentService.save(tbContent);
-    }
+
+	@Autowired
+	private TbContentCategoryMapper tbContentCategoryMapper;
+
+	@Autowired
+	private TbContentService tbContentService;
+
+	public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
+		tbContentCategoryMapper.insert(tbContentCategory);
+		tbContentService.save(tbContent);
+	}
+
 }

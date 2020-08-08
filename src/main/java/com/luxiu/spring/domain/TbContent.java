@@ -17,58 +17,61 @@ import lombok.Data;
  */
 @Data
 public class TbContent implements Serializable {
-    private Long id;
 
-    /**
-    * 内容类目ID
-    */
-    private Long categoryId;
+	private Long id;
 
-    /**
-    * 内容标题
-    */
-    private String title;
+	/**
+	 * 内容类目ID
+	 */
+	private Long categoryId;
 
-    /**
-    * 子标题
-    */
-    private String subTitle;
+	/**
+	 * 内容标题
+	 */
+	private String title;
 
-    /**
-    * 标题描述
-    */
-    private String titleDesc;
+	/**
+	 * 子标题
+	 */
+	private String subTitle;
 
-    /**
-    * 链接
-    */
-    private String url;
+	/**
+	 * 标题描述
+	 */
+	private String titleDesc;
 
-    /**
-    * 图片绝对路径
-    */
-    private String pic;
+	/**
+	 * 链接
+	 */
+	private String url;
 
-    /**
-    * 图片2
-    */
-    private String pic2;
+	/**
+	 * 图片绝对路径
+	 */
+	private String pic;
 
-    /**
-    * 内容
-    */
-    private String content;
+	/**
+	 * 图片2
+	 */
+	private String pic2;
 
-    private Date created;
+	/**
+	 * 内容
+	 */
+	private String content;
 
-    private Date updated;
+	private Date created;
 
-    private TbContentCategory tbContentCategory;
+	private Date updated;
 
-    private static final long serialVersionUID = 1L;
+	private TbContentCategory tbContentCategory;
 
-    // 当前页码从1开始
-    private Integer pageNumber;
-    // 每页条数
-    private Integer pageSize;
+	private static final long serialVersionUID = 1L;
+
+	// 当前页码从1开始
+	private Integer pageNumber;
+
+	// 每页条数
+	private Integer pageSize;
+
 }

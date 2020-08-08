@@ -12,9 +12,11 @@ package com.luxiu.spring.mapper.datasourcetwo;
  * @company https://www.beyond.com/
  */
 public interface CreateSequences {
-    /**
-     * 获取Person表自增长序列
-     *
-     */
-    public String getPersonPidSequences();
+
+	/**
+	 * 获取Person表自增长序列
+	 *
+	 */
+	public String getPersonPidSequences();
+
 }

@@ -2,7 +2,6 @@ package com.luxiu.spring.service;
 
 import com.luxiu.spring.domain.Person;
 
-
 /**
  * <p>
  * Description:
@@ -15,5 +14,7 @@ import com.luxiu.spring.domain.Person;
  * @company https://www.beyond.com/
  */
 public interface TbPersonService {
-    void save(Person person);
+
+	void save(Person person);
+
 }

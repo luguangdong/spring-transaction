@@ -29,29 +29,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/content")
 public class ContentController {
-    public static final Logger logger = LoggerFactory.getLogger(ContentController.class);
-    @Autowired
-    private PersonManager personManager;
 
-    @Autowired
-    private ContentManager contentManager;
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public ResponseResult save(@RequestBody TbContent tbContent){
-        try {
-            logger.info("save方法入参tbContent={}", JSONUtil.parseObj(tbContent,false));
-            contentManager.save(tbContent);
-            Person person = new Person();
-            person.setPid(456L);
-            person.setPname("小明");
-            person.setGender("1");
-            personManager.save(person);
-            logger.info("save方法保存成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("save方法保存异常,异常信息:{}",e);
-            return ResponseResult.failure(ResponseCode.INTERFACE_INNER_INVOKE_ERROR,e);
-        }
-        return ResponseResult.success("创建成功");
+	public static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
-    }
+	@Autowired
+	private PersonManager personManager;
+
+	@Autowired
+	private ContentManager contentManager;
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ResponseResult save(@RequestBody TbContent tbContent) {
+		try {
+			logger.info("save方法入参tbContent={}", JSONUtil.parseObj(tbContent, false));
+			contentManager.save(tbContent);
+			Person person = new Person();
+			person.setPid(456L);
+			person.setPname("小明");
+			person.setGender("1");
+			personManager.save(person);
+			logger.info("save方法保存成功");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			logger.error("save方法保存异常,异常信息:{}", e);
+			return ResponseResult.failure(ResponseCode.INTERFACE_INNER_INVOKE_ERROR, e);
+		}
+		return ResponseResult.success("创建成功");
+
+	}
+
 }

@@ -17,26 +17,27 @@ import java.util.List;
  * @company https://www.beyond.com/
  */
 public interface PersonMapper {
-    int deleteByPrimaryKey(Long pid);
 
-    int insert(Person record);
+	int deleteByPrimaryKey(Long pid);
 
-    int insertSelective(Person record);
+	int insert(Person record);
 
-    Person selectByPrimaryKey(Long pid);
+	int insertSelective(Person record);
 
-    int updateByPrimaryKeySelective(Person record);
+	Person selectByPrimaryKey(Long pid);
 
-    int updateByPrimaryKey(Person record);
+	int updateByPrimaryKeySelective(Person record);
 
-    Long findTotalCount();
+	int updateByPrimaryKey(Person record);
 
-    List<Person> findByPage(Person record);
+	Long findTotalCount();
 
-    Long findTotalCountOnCondition(Person record);
+	List<Person> findByPage(Person record);
 
-    List<Person> findByPageOnCondition(Person record);
+	Long findTotalCountOnCondition(Person record);
 
-    List<Person> findAll(Person person);
+	List<Person> findByPageOnCondition(Person record);
+
+	List<Person> findAll(Person person);
 
 }

@@ -14,5 +14,7 @@ import com.luxiu.spring.domain.TbContent;
  * @company https://www.beyond.com/
  */
 public interface ContentManager {
-    void save(TbContent tbContent);
+
+	void save(TbContent tbContent);
+
 }

@@ -19,10 +19,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PersonMangerImpl implements PersonManager {
-    @Autowired
-    private TbPersonService personService;
 
-    public void save(Person person) {
-        personService.save(person);
-    }
+	@Autowired
+	private TbPersonService personService;
+
+	public void save(Person person) {
+		personService.save(person);
+	}
+
 }

@@ -18,11 +18,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataSourceInterceptor {
-    public void setDataSource(JoinPoint jp) {
-        DatabaseContextHolder.setCustomerType("dataSource");
-    }
 
-    public void setDataSourceTwo(JoinPoint jp) {
-        DatabaseContextHolder.setCustomerType("dataSourceTwo");
-    }
+	public void setDataSource(JoinPoint jp) {
+		DatabaseContextHolder.setCustomerType("dataSource");
+	}
+
+	public void setDataSourceTwo(JoinPoint jp) {
+		DatabaseContextHolder.setCustomerType("dataSourceTwo");
+	}
+
 }

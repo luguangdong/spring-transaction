@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  * <p>
  * Description:
@@ -22,10 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TbContentServiceImpl implements TbContentService {
-    @Autowired
-    private TbContentMapper tbContentMapper;
-    public void save(TbContent tbContent) {
-        tbContentMapper.insert(tbContent);
-        //int i = 1/0;
-    }
+
+	@Autowired
+	private TbContentMapper tbContentMapper;
+
+	public void save(TbContent tbContent) {
+		tbContentMapper.insert(tbContent);
+		// int i = 1/0;
+	}
+
 }

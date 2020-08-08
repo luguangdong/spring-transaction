@@ -23,13 +23,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service(value = "TbContentCategoryServiceAnnotation")
 public class TbContentCategoryServiceAnnotationImpl implements TbContentCategoryService {
-    @Autowired
-    private TbContentCategoryMapper tbContentCategoryMapper;
-    @Autowired
-    private TbContentService tbContentService;
 
-    public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
-        tbContentCategoryMapper.insert(tbContentCategory);
-        tbContentService.save(tbContent);
-    }
+	@Autowired
+	private TbContentCategoryMapper tbContentCategoryMapper;
+
+	@Autowired
+	private TbContentService tbContentService;
+
+	public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
+		tbContentCategoryMapper.insert(tbContentCategory);
+		tbContentService.save(tbContent);
+	}
+
 }

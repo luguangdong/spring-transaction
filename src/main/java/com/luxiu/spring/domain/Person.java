@@ -15,14 +15,17 @@ import lombok.Data;
  */
 @Data
 public class Person {
-    private Long pid;
 
-    private String pname;
+	private Long pid;
 
-    private String gender;
+	private String pname;
 
-    // 当前页码从1开始
-    private Integer pageNumber;
-    // 每页条数
-    private Integer pageSize;
+	private String gender;
+
+	// 当前页码从1开始
+	private Integer pageNumber;
+
+	// 每页条数
+	private Integer pageSize;
+
 }

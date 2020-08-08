@@ -14,5 +14,7 @@ import com.luxiu.spring.domain.TbContent;
  * @company https://www.singlewindow.cn/
  */
 public interface TbContentService {
-    void save(TbContent tbContent);
+
+	void save(TbContent tbContent);
+
 }

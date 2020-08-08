@@ -5,7 +5,6 @@ import com.luxiu.spring.domain.TbContent;
 
 import java.util.List;
 
-
 /**
  * <p>
  * Description:
@@ -19,25 +18,27 @@ import java.util.List;
  */
 
 public interface TbContentMapper {
-    int deleteByPrimaryKey(Long id);
 
-    int insert(TbContent record);
+	int deleteByPrimaryKey(Long id);
 
-    int insertSelective(TbContent record);
+	int insert(TbContent record);
 
-    TbContent selectByPrimaryKey(Long id);
+	int insertSelective(TbContent record);
 
-    int updateByPrimaryKeySelective(TbContent record);
+	TbContent selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKey(TbContent record);
+	int updateByPrimaryKeySelective(TbContent record);
 
-    List<TbContent> findAll(TbContent record);
+	int updateByPrimaryKey(TbContent record);
 
-    Long findTotalCount();
+	List<TbContent> findAll(TbContent record);
 
-    List<TbContent> findByPage(TbContent record);
+	Long findTotalCount();
 
-    Long findTotalCountOnCondition(TbContent record);
+	List<TbContent> findByPage(TbContent record);
 
-    List<TbContent> findByPageOnCondition(TbContent record);
+	Long findTotalCountOnCondition(TbContent record);
+
+	List<TbContent> findByPageOnCondition(TbContent record);
+
 }

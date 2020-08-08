@@ -15,5 +15,7 @@ import com.luxiu.spring.domain.TbContentCategory;
  * @company https://www.singlewindow.cn/
  */
 public interface TbContentCategoryService {
-    void save(TbContentCategory tbContentCategory, TbContent tbContent);
+
+	void save(TbContentCategory tbContentCategory, TbContent tbContent);
+
 }

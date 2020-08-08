@@ -12,27 +12,27 @@ package com.luxiu.spring.conf.datasource;
  * @company https://www.beyond.com/
  */
 public class DatabaseContextHolder {
-    /**
-     * 注意：数据源标识保存在线程变量中，避免多线程操作数据源时互相干扰
-     */
-    private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
-    /**
-     *
-     * @param customerType
-     * 设置对应的数据源
-     * customerType 对应的值就是 spring-context-druid.xml 中  <entry value-ref="dataSource" key="dataSource"></entry> 中的 dataSource
-     *
-     */
-    public static void setCustomerType(String customerType) {
-        contextHolder.set(customerType);
-    }
+	/**
+	 * 注意：数据源标识保存在线程变量中，避免多线程操作数据源时互相干扰
+	 */
+	private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
-    public static String getCustomerType() {
-        return contextHolder.get();
-    }
+	/**
+	 * @param customerType 设置对应的数据源 customerType 对应的值就是 spring-context-druid.xml 中
+	 * <entry value-ref="dataSource" key="dataSource"></entry> 中的 dataSource
+	 *
+	 */
+	public static void setCustomerType(String customerType) {
+		contextHolder.set(customerType);
+	}
 
-    public static void clearCustomerType() {
-        contextHolder.remove();
-    }
+	public static String getCustomerType() {
+		return contextHolder.get();
+	}
+
+	public static void clearCustomerType() {
+		contextHolder.remove();
+	}
+
 }

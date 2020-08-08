@@ -14,5 +14,7 @@ import com.luxiu.spring.domain.Person;
  * @company https://www.beyond.com/
  */
 public interface PersonManager {
-    void save(Person person);
+
+	void save(Person person);
+
 }

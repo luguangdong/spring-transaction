@@ -21,10 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TbPersonServiceImpl implements TbPersonService {
-    @Autowired
-    private PersonMapper personMapper;
-    public void save(Person person) {
-        personMapper.insertSelective(person);
 
-    }
+	@Autowired
+	private PersonMapper personMapper;
+
+	public void save(Person person) {
+		personMapper.insertSelective(person);
+
+	}
+
 }

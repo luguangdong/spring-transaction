@@ -14,9 +14,10 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * @company https://www.beyond.com/
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
-    @Override
-    protected Object determineCurrentLookupKey() {
-        return DatabaseContextHolder.getCustomerType();
-    }
+
+	@Override
+	protected Object determineCurrentLookupKey() {
+		return DatabaseContextHolder.getCustomerType();
+	}
 
 }

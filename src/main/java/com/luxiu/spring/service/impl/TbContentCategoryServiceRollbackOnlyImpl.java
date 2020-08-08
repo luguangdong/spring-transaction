@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-
 /**
  * <p>
  * Description: 测试git合并部分代码
@@ -26,20 +25,23 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 @Transactional
 @Service(value = "tbContentCategoryServiceRollbackOnly")
 public class TbContentCategoryServiceRollbackOnlyImpl implements TbContentCategoryService {
-    @Autowired
-    private TbContentCategoryMapper tbContentCategoryMapper;
-    @Autowired
-    private TbContentService tbContentService;
 
-    public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
-        try {
-            tbContentCategoryMapper.insert(tbContentCategory);
-            tbContentService.save(tbContent);
-        } catch (Exception e) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            e.printStackTrace();
-        }
+	@Autowired
+	private TbContentCategoryMapper tbContentCategoryMapper;
 
+	@Autowired
+	private TbContentService tbContentService;
 
-    }
+	public void save(TbContentCategory tbContentCategory, TbContent tbContent) {
+		try {
+			tbContentCategoryMapper.insert(tbContentCategory);
+			tbContentService.save(tbContent);
+		}
+		catch (Exception e) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			e.printStackTrace();
+		}
+
+	}
+
 }

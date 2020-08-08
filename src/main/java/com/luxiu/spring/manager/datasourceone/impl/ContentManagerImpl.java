@@ -19,9 +19,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ContentManagerImpl implements ContentManager {
-    @Autowired
-    private TbContentService contentService;
-    public void save(TbContent tbContent) {
-        contentService.save(tbContent);
-    }
+
+	@Autowired
+	private TbContentService contentService;
+
+	public void save(TbContent tbContent) {
+		contentService.save(tbContent);
+	}
+
 }

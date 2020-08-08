@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:redisson="http://redisson.org/schema/redisson"
+       xsi:schemaLocation="
+                     http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                     http://redisson.org/schema/redisson
+                     http://redisson.org/schema/redisson/redisson.xsd ">
+
+    <bean id="annotationPropertyConfigurerRedis"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- redis数据源 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大空闲数 -->
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <!-- 最大空连接数 -->
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <!-- 最大等待时间 -->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <!-- 返回连接时，检测连接是否成功 -->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+
+    <!-- Spring-redis连接池管理工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- IP地址 -->
+        <property name="hostName" value="${redis.host}" />
+        <!-- 端口号 -->
+        <property name="port" value="${redis.port}" />
+        <property name="password" value="${redis.password}" />
+        <!-- 超时时间 默认2000-->
+        <property name="timeout" value="${redis.timeout}" />
+        <!-- 连接池配置引用 -->
+        <property name="poolConfig" ref="poolConfig" />
+        <!-- usePool：是否使用连接池 -->
+        <property name="usePool" value="true"/>
+    </bean>
+
+    <!-- redis template definition -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+        </property>
+        <!--开启事务  -->
+        <property name="enableTransactionSupport" value="true"></property>
+    </bean>
+
+    <!-- redisson单机配置 -->
+    <bean id="jacksonCodec" class="org.redisson.codec.JsonJacksonCodec"></bean>
+    <redisson:client
+            id="redissonClient"
+            netty-threads="20"
+            threads="20"
+            codec-ref="jacksonCodec">
+        <redisson:single-server address="redis://192.168.137.114:6379"
+                                connection-pool-size="500"
+                                idle-connection-timeout="10000"
+                                connect-timeout="10000"
+                                timeout="3000"
+                                database="0"/>
+    </redisson:client>
+
+    <!-- redisson集群配置 -->
+    <!--<redisson:client
+            id="redissonCilent"
+            netty-threads="20"
+            threads="20"
+            codec-ref="org.redisson.codec.JsonJacksonCodec">
+        <redisson:cluster-servers
+                idle-connection-timeout="10000"
+                ping-timeout="1000"
+                connect-timeout="10000"
+                timeout="3000"
+                retry-attempts="3"
+                retry-interval="1500"
+                password="test"
+                subscriptions-per-connection="5"
+                client-name="none"
+                load-balancer-ref="org.redisson.connection.balancer.RoundRobinLoadBalancer"
+                subscription-connection-minimum-idle-size="1"
+                subscription-connection-pool-size="50"
+                slave-connection-minimum-idle-size="10"
+                slave-connection-pool-size="6400"
+                master-connection-minimum-idle-size="50"
+                master-connection-pool-size="6400"
+                read-mode="SLAVE"
+                subscription-mode="SLAVE"
+                scan-interval="1000" >
+            <redisson:node-address value="redis://10.1.1.1:1110" />
+            <redisson:node-address value="redis://10.1.1.1:1111" />
+            <redisson:node-address value="redis://10.1.1.1:1112" />
+            <redisson:node-address value="redis://10.1.1.1:1114" />
+            <redisson:node-address value="redis://10.1.1.1:1115" />
+            <redisson:node-address value="redis://10.1.1.1:1113" />
+        </redisson:cluster-servers>
+    </redisson:client>-->
+</beans>

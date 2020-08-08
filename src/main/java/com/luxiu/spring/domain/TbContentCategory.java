@@ -17,45 +17,47 @@ import lombok.Data;
  */
 @Data
 public class TbContentCategory implements Serializable {
-    /**
-    * 类目ID
-    */
-    private Long id;
 
-    /**
-    * 父类目ID=0时，代表的是一级的类目
-    */
-    private Long parentId;
+	/**
+	 * 类目ID
+	 */
+	private Long id;
 
-    /**
-    * 分类名称
-    */
-    private String name;
+	/**
+	 * 父类目ID=0时，代表的是一级的类目
+	 */
+	private Long parentId;
 
-    /**
-    * 状态。可选值:1(正常),2(删除)
-    */
-    private Integer status;
+	/**
+	 * 分类名称
+	 */
+	private String name;
 
-    /**
-    * 排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数
-    */
-    private Integer sortOrder;
+	/**
+	 * 状态。可选值:1(正常),2(删除)
+	 */
+	private Integer status;
 
-    /**
-    * 该类目是否为父类目，1为true，0为false
-    */
-    private Boolean isParent;
+	/**
+	 * 排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数
+	 */
+	private Integer sortOrder;
 
-    /**
-    * 创建时间
-    */
-    private Date created;
+	/**
+	 * 该类目是否为父类目，1为true，0为false
+	 */
+	private Boolean isParent;
 
-    /**
-    * 创建时间
-    */
-    private Date updated;
+	/**
+	 * 创建时间
+	 */
+	private Date created;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 创建时间
+	 */
+	private Date updated;
+
+	private static final long serialVersionUID = 1L;
+
 }
