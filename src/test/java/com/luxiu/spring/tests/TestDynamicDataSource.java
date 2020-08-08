@@ -33,7 +33,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring-context.xml", "classpath:spring-context-druid.xml",
-		"classpath:spring-context-mybatis.xml" })
+		"classpath:spring-context-mybatis.xml","classpath:spring-context-redis.xml" })
 public class TestDynamicDataSource {
 
 	@Autowired
@@ -180,6 +180,7 @@ public class TestDynamicDataSource {
 		tbContent.setContent("内容");
 		tbContent.setCreated(new Date());
 		tbContent.setUpdated(new Date());
+		int i = 1/0;
 		contentManager.save(tbContent);
 	}
 
@@ -189,12 +190,12 @@ public class TestDynamicDataSource {
 	/**
 	 * 使用动态切换数据源,切割点配置在manager层 <aop:pointcut id="daoOne" expression="execution(*
 	 * com.luxiu.spring.manager.datasourceone.*.*(..))" /> DataSourceInterceptor
-	 * 拦截器切点拦截的方法是 manager层 测试单个插入成功
+	 * 使用分布式事务中间件 atomikos 实现全局异常回滚
 	 *
-	 * https://mp.weixin.qq.com/s?src=11&timestamp=1596505860&ver=2501&signature=EfBXgsfy-YjFuMD08wVOHr0QwRV4Cxc3JShggx49P6HE083DWa85ziMd4vxFW-EyfH4PW02WsJRBQGKmGbDUdpTS6FtXcu*r9*9JbjZusO9qoPhpCLHWVh4pGTSHrhk5&new=1
+	 *
 	 */
 	@Test
-	public void testTransactionManager1() {
+	public void testTransactionManagerByAtomikos() {
 		// 获取事务
 		UserTransaction userTransaction = jtaTransactionManager.getUserTransaction();
 		try {
@@ -213,6 +214,7 @@ public class TestDynamicDataSource {
 			tbContent.setContent("内容");
 			tbContent.setCreated(new Date());
 			tbContent.setUpdated(new Date());
+			int i = 1/0;
 			contentManager.save(tbContent);
 
 			// 事务提交

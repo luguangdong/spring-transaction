@@ -13,25 +13,25 @@
                                             <!-- #==== DataSourceTransactionManager settings ====#-->
                                             <!-- #===============================================#-->
 <!--********************************************************* spring事物管理 START *********************************************************-->
-    <!-- 配置事务管理器 -->
+    <!--&lt;!&ndash; 配置事务管理器 &ndash;&gt;
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dynamicDataSource"/>
     </bean>
-     <!-- 配置事务通知 -->
+     &lt;!&ndash; 配置事务通知 &ndash;&gt;
     <tx:advice id="myAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
 
-    <!-- 配置顾问和切入点 -->
+    &lt;!&ndash; 配置顾问和切入点 &ndash;&gt;
     <aop:config>
         <aop:pointcut id="myPointcut" expression="execution(* com.luxiu.spring.service.*.*(..))" />
         <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointcut" />
     </aop:config>
 
-    <!-- 开启事务注解驱动-->
-     <tx:annotation-driven transaction-manager="transactionManager" />
+    &lt;!&ndash; 开启事务注解驱动&ndash;&gt;
+     <tx:annotation-driven transaction-manager="transactionManager" />-->
 
     <!--********************************************************* spring事物管理 END   *********************************************************-->
 
@@ -40,7 +40,7 @@
                                             <!-- #==== DataSourceTransactionManager settings ====#-->
                                             <!-- #===============================================#-->
     <!--********************************************************* atomikos事物管理 START *********************************************************-->
-   <!-- &lt;!&ndash; 配置事务管理器 &ndash;&gt;
+    <!-- 配置事务管理器 -->
     <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init"
           destroy-method="close">
         <property name="forceShutdown" value="true"/>
@@ -55,18 +55,18 @@
     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
         <property name="transactionManager" ref="springTransactionManager"/>
     </bean>
-    &lt;!&ndash;开始spring事务&ndash;&gt;
+    <!--开始spring事务-->
     <tx:annotation-driven transaction-manager="springTransactionManager"/>
     <tx:advice id="txAdvice" transaction-manager="springTransactionManager">
         <tx:attributes>
             <tx:method name="save*" rollback-for="Exception" />
         </tx:attributes>
     </tx:advice>
-    &lt;!&ndash;配置AOP&ndash;&gt;
+    <!--配置AOP-->
     <aop:config>
         <aop:pointcut id="jtaServiceOperation" expression="execution(* com.luxiu.spring.service.*.*(..))"></aop:pointcut>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="jtaServiceOperation" ></aop:advisor>
-    </aop:config>-->
+    </aop:config>
     <!--********************************************************* atomikos事物管理 END   *********************************************************-->
 
 
