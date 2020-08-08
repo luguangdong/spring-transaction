@@ -48,7 +48,11 @@ public class RedisLockImpl implements RedisLock {
 						Thread.sleep(10000);
 					}
 					catch (InterruptedException e) {
-						e.printStackTrace();
+						// e.printStackTrace();
+						// 当线程执行sleep(1000)之后会被立即阻塞，如果在阻塞时外面调用interrupt来中断这个线程，那么就会执行e.printStackTrace();
+						// 这个时候其实线程并未中断，执行完这条语句之后线程会继续执行while循环，开始sleep，所以说如果没有对InterruptedException进行处理，后果就是线程可能无法中断
+						// 所以，在任何时候碰到InterruptedException，都要手动把自己这个线程中断,this.interrupt();
+						this.interrupt();
 					}
 					redisTemplate.expire(key, timeout, unit);
 				}
@@ -59,10 +63,10 @@ public class RedisLockImpl implements RedisLock {
 			String uuid = thread.getId() + ":" + UUID.randomUUID().toString();
 			threadLocal.set(uuid);
 			lock = redisTemplate.opsForValue().setIfAbsent(key, uuid, 30l, TimeUnit.SECONDS);
-			// 注意放置位置,只用拿到锁的线程才会启动异步线程续命
-			thread.start();
-			// 解决可重入问题
+
+
 		}
+		// 解决可重入问题
 		else if (threadLocal.get().equals(redisTemplate.opsForValue().get(key))) {
 			lock = true;
 		}
@@ -75,7 +79,11 @@ public class RedisLockImpl implements RedisLock {
 			if (lock) {
 				break;
 			}
+
 		}
+
+		// 注意放置位置,只用拿到锁的线程才会启动异步线程续命
+		thread.start();
 
 		return lock;
 	}

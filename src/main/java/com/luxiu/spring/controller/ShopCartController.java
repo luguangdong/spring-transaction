@@ -237,7 +237,7 @@ public class ShopCartController {
 	private RedisLock redisLock;
 
 	/**
-	 * 使用分布式锁,解决不同JVM并发超卖,解决异常下出现死锁,
+	 * 使用分布式锁,解决不同JVM并发超卖
 	 * @return
 	 */
 	@RequestMapping(value = "/submitOrder6", method = RequestMethod.GET)
@@ -295,7 +295,7 @@ public class ShopCartController {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			redisLock.releaseLock(product);
+			lock.unlock();
 			return ResponseResult.failure("扣减异常，异常信息：" + e);
 		}
 		lock.unlock();

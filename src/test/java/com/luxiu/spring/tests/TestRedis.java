@@ -27,11 +27,11 @@ import java.io.UnsupportedEncodingException;
 public class TestRedis {
 
 	@Resource
-	private RedisTemplate<String, Object> stringRedisTemplate;
+	private RedisTemplate redisTemplate;
 
 	@Test
-	public void testSet1() throws UnsupportedEncodingException {
-		stringRedisTemplate.opsForValue().set("stock", new String("200".getBytes(), "utf-8"));
+	public void testSet() throws UnsupportedEncodingException {
+		redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
 	}
 
 }
