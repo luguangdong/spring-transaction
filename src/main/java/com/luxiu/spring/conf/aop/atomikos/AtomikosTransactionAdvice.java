@@ -39,8 +39,7 @@ public class AtomikosTransactionAdvice {
 
 	// around方法
 	@Around("atomikosPointCut()")
-	public ResponseResult around(ProceedingJoinPoint joinPoint) throws Throwable {
-		ResponseResult proceed = null;
+	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		UserTransaction userTransaction = null;
 		try {
 			// 获取事务
@@ -48,7 +47,7 @@ public class AtomikosTransactionAdvice {
 			// 开启事务
 			userTransaction.begin();
 			// 这里是核心
-			proceed = (ResponseResult) joinPoint.proceed();
+			joinPoint.proceed();
 			// 事务提交
 			userTransaction.commit();
 
@@ -64,7 +63,7 @@ public class AtomikosTransactionAdvice {
 			e.printStackTrace();
 			return ResponseResult.failure(ResponseCode.INTERFACE_INNER_INVOKE_ERROR, e);
 		}
-		return ResponseResult.success("创建成功");
+		return ResponseResult.success("执行成功");
 	}
 
 }
