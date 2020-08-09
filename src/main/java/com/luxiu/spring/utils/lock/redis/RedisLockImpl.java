@@ -1,5 +1,8 @@
 package com.luxiu.spring.utils.lock.redis;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisLockImpl implements RedisLock {
+	public static final Logger logger = LoggerFactory.getLogger(RedisLockImpl.class);
 
 	@Autowired
 	private RedisTemplate redisTemplate;
@@ -45,7 +49,7 @@ public class RedisLockImpl implements RedisLock {
 				// 自旋
 				while (true) {
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(100);
 					}
 					catch (InterruptedException e) {
 						// e.printStackTrace();
@@ -62,8 +66,12 @@ public class RedisLockImpl implements RedisLock {
 		if (threadLocal.get() == null) {
 			String uuid = thread.getId() + ":" + UUID.randomUUID().toString();
 			threadLocal.set(uuid);
+			logger.info("上锁时: threadLocal中设置的key = {}, value = {}",thread.getId(),uuid);
 			lock = redisTemplate.opsForValue().setIfAbsent(key, uuid, 30l, TimeUnit.SECONDS);
-
+			if(lock){
+				logger.info("上锁时: 第一次拿到锁的线程id = {}",thread.getId());
+			}
+			logger.info("上锁时: redis中设置的key = {}, value = {}",key,uuid);
 
 		}
 		// 解决可重入问题
@@ -71,12 +79,17 @@ public class RedisLockImpl implements RedisLock {
 			lock = true;
 		}
 
-		// 阻塞 占用cpu,性能可能不好
+		// 假如现在同一个product_id商品有66件库存,采用秒杀方案，此时有100个请求过来抢同一件商品,那么只有第一个人会拿到锁,其他99个人没有拿到锁，
+		// 没有拿到锁的用户此时如果直接返回的话,就会存在商品卖不完的问题。解决此问题我们要做阻塞异步操作。
+		// 如果商品量足够大的话,并发量不高的话，就没有必要加阻塞异步操作了。这里具体场景具体对待。
+		// 问题: 阻塞 占用cpu,性能可能不好
 		while (!lock) {
+			logger.info("上锁时: 没有拿到锁的线程 id = {}",thread.getId());
 			String uuid = thread.getId() + ":" + UUID.randomUUID().toString();
 			threadLocal.set(uuid);
 			lock = redisTemplate.opsForValue().setIfAbsent(key, uuid, 30l, TimeUnit.SECONDS);
 			if (lock) {
+				logger.info("上锁时: 第N次拿到锁的线程 id = {}",thread.getId());
 				break;
 			}
 
@@ -91,13 +104,15 @@ public class RedisLockImpl implements RedisLock {
 	// 给个唯一标识,防止自己的老婆被别人干
 	public void releaseLock(String key) {
 		String redisValue = (String) redisTemplate.opsForValue().get(key);
+		logger.info("释放锁时: redis中设置的key = {}, value = {}",key,redisValue);
 		String threadLocalValue = threadLocal.get();
+		logger.info("释放锁时: threadLocal中设置的value ={}",threadLocalValue);
 		if (threadLocalValue.equals(redisValue)) {
 			redisTemplate.delete(key);
 		}
 		// 停止异步线程
-		if (!StringUtils.isEmpty(redisValue)) {
-			String[] split = redisValue.split(":");
+		if (!StringUtils.isEmpty(threadLocalValue)) {
+			String[] split = threadLocalValue.split(":");
 			if (split.length > 0) {
 				Long threadId = Long.valueOf(split[0]);
 				// 停止异步线程
