@@ -33,7 +33,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring-context.xml", "classpath:spring-context-druid.xml",
-		"classpath:spring-context-mybatis.xml","classpath:spring-context-redis.xml" })
+		"classpath:spring-context-mybatis.xml", "classpath:spring-context-redis.xml" })
 public class TestDynamicDataSource {
 
 	@Autowired
@@ -180,7 +180,7 @@ public class TestDynamicDataSource {
 		tbContent.setContent("内容");
 		tbContent.setCreated(new Date());
 		tbContent.setUpdated(new Date());
-		int i = 1/0;
+		int i = 1 / 0;
 		contentManager.save(tbContent);
 	}
 
@@ -214,7 +214,7 @@ public class TestDynamicDataSource {
 			tbContent.setContent("内容");
 			tbContent.setCreated(new Date());
 			tbContent.setUpdated(new Date());
-			int i = 1/0;
+			int i = 1 / 0;
 			contentManager.save(tbContent);
 
 			// 事务提交

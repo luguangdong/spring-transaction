@@ -1,6 +1,5 @@
 package com.luxiu.spring.utils.lock.redis;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisLockImpl implements RedisLock {
+
 	public static final Logger logger = LoggerFactory.getLogger(RedisLockImpl.class);
 
 	@Autowired
@@ -66,12 +66,12 @@ public class RedisLockImpl implements RedisLock {
 		if (threadLocal.get() == null) {
 			String uuid = thread.getId() + ":" + UUID.randomUUID().toString();
 			threadLocal.set(uuid);
-			logger.info("上锁时: threadLocal中设置的key = {}, value = {}",thread.getId(),uuid);
+			logger.info("上锁时: threadLocal中设置的key = {}, value = {}", thread.getId(), uuid);
 			lock = redisTemplate.opsForValue().setIfAbsent(key, uuid, 30l, TimeUnit.SECONDS);
-			if(lock){
-				logger.info("上锁时: 第一次拿到锁的线程id = {}",thread.getId());
+			if (lock) {
+				logger.info("上锁时: 第一次拿到锁的线程id = {}", thread.getId());
 			}
-			logger.info("上锁时: redis中设置的key = {}, value = {}",key,uuid);
+			logger.info("上锁时: redis中设置的key = {}, value = {}", key, uuid);
 
 		}
 		// 解决可重入问题
@@ -84,12 +84,12 @@ public class RedisLockImpl implements RedisLock {
 		// 如果商品量足够大的话,并发量不高的话，就没有必要加阻塞异步操作了。这里具体场景具体对待。
 		// 问题: 阻塞 占用cpu,性能可能不好
 		while (!lock) {
-			logger.info("上锁时: 没有拿到锁的线程 id = {}",thread.getId());
+			logger.info("上锁时: 没有拿到锁的线程 id = {}", thread.getId());
 			String uuid = thread.getId() + ":" + UUID.randomUUID().toString();
 			threadLocal.set(uuid);
 			lock = redisTemplate.opsForValue().setIfAbsent(key, uuid, 30l, TimeUnit.SECONDS);
 			if (lock) {
-				logger.info("上锁时: 第N次拿到锁的线程 id = {}",thread.getId());
+				logger.info("上锁时: 第N次拿到锁的线程 id = {}", thread.getId());
 				break;
 			}
 
@@ -104,9 +104,9 @@ public class RedisLockImpl implements RedisLock {
 	// 给个唯一标识,防止自己的老婆被别人干
 	public void releaseLock(String key) {
 		String redisValue = (String) redisTemplate.opsForValue().get(key);
-		logger.info("释放锁时: redis中设置的key = {}, value = {}",key,redisValue);
+		logger.info("释放锁时: redis中设置的key = {}, value = {}", key, redisValue);
 		String threadLocalValue = threadLocal.get();
-		logger.info("释放锁时: threadLocal中设置的value ={}",threadLocalValue);
+		logger.info("释放锁时: threadLocal中设置的value ={}", threadLocalValue);
 		if (threadLocalValue.equals(redisValue)) {
 			redisTemplate.delete(key);
 		}

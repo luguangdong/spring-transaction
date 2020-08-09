@@ -1,7 +1,6 @@
 package com.luxiu.spring.controller;
 
 import cn.hutool.json.JSONUtil;
-import com.luxiu.spring.conf.response.ResponseCode;
 import com.luxiu.spring.conf.response.ResponseResult;
 import com.luxiu.spring.domain.Person;
 import com.luxiu.spring.domain.TbContent;
@@ -40,21 +39,15 @@ public class ContentController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ResponseResult save(@RequestBody TbContent tbContent) {
-		try {
-			logger.info("save方法入参tbContent={}", JSONUtil.parseObj(tbContent, false));
-			contentManager.save(tbContent);
-			Person person = new Person();
-			person.setPid(456L);
-			person.setPname("小明");
-			person.setGender("1");
-			personManager.save(person);
-			logger.info("save方法保存成功");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			logger.error("save方法保存异常,异常信息:{}", e);
-			return ResponseResult.failure(ResponseCode.INTERFACE_INNER_INVOKE_ERROR, e);
-		}
+		logger.info("save方法入参tbContent={}", JSONUtil.parseObj(tbContent, false));
+		contentManager.save(tbContent);
+		Person person = new Person();
+		person.setPid(456L);
+		person.setPname("小明");
+		person.setGender("1");
+		int i = 1 / 0;
+		personManager.save(person);
+		logger.info("save方法保存成功");
 		return ResponseResult.success("创建成功");
 
 	}

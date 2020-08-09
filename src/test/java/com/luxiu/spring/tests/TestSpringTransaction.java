@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring-context.xml", "classpath:spring-context-druid.xml",
-		"classpath:spring-context-mybatis.xml" })
+		"classpath:spring-context-mybatis.xml", "classpath:spring-context-redis.xml" })
 public class TestSpringTransaction {
 
 	@Resource(name = "TbContentCategoryServiceConf")
