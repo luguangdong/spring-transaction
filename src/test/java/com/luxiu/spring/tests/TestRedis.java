@@ -33,4 +33,5 @@ public class TestRedis {
 	public void testSet() throws UnsupportedEncodingException {
 		redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
 	}
+
 }
