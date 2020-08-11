@@ -51,4 +51,14 @@ public class TestRedis {
 
     }
 
+
+    //===================================================================================
+    @Test
+    public void testSet5() throws UnsupportedEncodingException {
+        redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
+
+    }
+
+    //===================================================================================
+
 }
