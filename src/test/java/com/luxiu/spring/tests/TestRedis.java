@@ -34,13 +34,21 @@ public class TestRedis {
 		redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
 	}
 
-	//=========================================================== dev分支新添加功能的代码
     @Test
-    public void testSet9() throws UnsupportedEncodingException {
+    public void testSet2() throws UnsupportedEncodingException {
         redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
     }
-    //=========================================================== dev分支新添加功能的代码
 
+    @Test
+    public void testSet3() throws UnsupportedEncodingException {
+        redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
+    }
 
+    //===================================================================================
+    @Test
+    public void testSet4() throws UnsupportedEncodingException {
+        redisTemplate.opsForValue().set("stock", new String("100".getBytes(), "utf-8"));
+
+    }
 
 }
