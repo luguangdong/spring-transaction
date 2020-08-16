@@ -56,7 +56,8 @@ public class GlobalBusinessExceptionHandler {
 		// 未知错误
 		else {
 			error.put("code", ResponseCode.UNKNOWN.code());
-			error.put("message", ResponseCode.UNKNOWN.message());
+			//error.put("message", ResponseCode.UNKNOWN.message());
+			error.put("message", ex.getMessage());
 			log.error(ex.getMessage());
 		}
 
