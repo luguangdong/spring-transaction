@@ -1,4 +1,4 @@
-package com.luxiu.spring.controller;
+package com.luxiu.spring.controller.datasourceone;
 
 import cn.hutool.json.JSONUtil;
 import com.luxiu.spring.conf.response.ResponseResult;

@@ -1,4 +1,4 @@
-package com.luxiu.spring.controller;
+package com.luxiu.spring.controller.datasourceone;
 
 import com.luxiu.spring.conf.response.ResponseResult;
 import com.luxiu.spring.utils.lock.redis.RedisLock;

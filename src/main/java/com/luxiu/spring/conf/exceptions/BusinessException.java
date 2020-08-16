@@ -4,7 +4,7 @@ import com.luxiu.spring.conf.response.ResponseCode;
 
 /**
  * <p>
- * Description: 全局业务异常
+ * Description: 业务异常
  * </p>
  *
  * @author luguangdong
@@ -33,6 +33,11 @@ public class BusinessException extends RuntimeException {
 	public BusinessException(String message) {
 		super(message);
 		this.code = -1;
+	}
+
+	public BusinessException(Integer code, String message) {
+		super(message);
+		this.code = code;
 	}
 
 	public BusinessException(ResponseCode status) {

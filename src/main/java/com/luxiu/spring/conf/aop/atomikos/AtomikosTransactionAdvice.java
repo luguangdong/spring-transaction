@@ -33,7 +33,7 @@ public class AtomikosTransactionAdvice {
 	JtaTransactionManager jtaTransactionManager;
 
 	// 设置好增强点
-	@Pointcut("execution(* com.luxiu.spring.controller.*.*save*(..))")
+	@Pointcut("execution(* com.luxiu.spring.controller.datasourceone.*.*save*(..))")
 	private void atomikosPointCut() {
 	}
 

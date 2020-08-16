@@ -69,5 +69,5 @@
     </aop:config>
     <!--********************************************************* atomikos事物管理 END   *********************************************************-->
 
-
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 </beans>
