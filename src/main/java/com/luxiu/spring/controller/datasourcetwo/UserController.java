@@ -114,7 +114,7 @@ public class UserController {
 	 * @return {@link ResponseResult}
 	 */
 	@PostMapping("page")
-	public ResponseResult page(@RequestParam int current, @RequestParam int size,@RequestBody User user) {
+	public ResponseResult page(@RequestParam int current, @RequestParam int size, @RequestBody User user) {
 		Pagination<User> page = userService.page(current, size, user);
 		return ResponseResult.success(page);
 	}
