@@ -40,8 +40,10 @@
             <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.mapper.datasourcetwo.*.*(..))" />-->
             <!-- <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.service.*.*(..))" />
              <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.readservice.*.*(..))" />-->
-            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.manager.datasourceone.*.*(..))" />
-            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.manager.datasourcetwo.*.*(..))" />
+            <!--<aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.manager.datasourceone.*.*(..))" />
+            <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.manager.datasourcetwo.*.*(..))" />-->
+            <aop:pointcut id="daoOne" expression="execution(* com.luxiu.spring.controller.datasourceone.*.*(..))" />
+           <aop:pointcut id="daoTwo" expression="execution(* com.luxiu.spring.controller.datasourcetwo.*.*(..))" />
             <aop:before pointcut-ref="daoOne" method="setDataSource" />
             <aop:before pointcut-ref="daoTwo" method="setDataSourceTwo" />
         </aop:aspect>

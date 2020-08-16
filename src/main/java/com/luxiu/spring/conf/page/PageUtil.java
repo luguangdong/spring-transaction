@@ -1,5 +1,8 @@
 package com.luxiu.spring.conf.page;
 
+
+import com.github.pagehelper.PageInfo;
+
 /**
  * <p>
  * Description:
@@ -58,6 +61,22 @@ public class PageUtil {
 		pagination.setEnd(pageNumber * pageSize);
 		pagination.setPageNumber(pageNumber);
 		pagination.setPageSize(pageSize);
+		return pagination;
+	}
+
+	/**
+	 *  pagehelper中的PageInfo对象转换自定义Pagination对象
+	 * @param pageInfo
+	 * @return
+	 */
+
+	public static Pagination pageInfo2Pagination(PageInfo pageInfo) {
+		Pagination pagination = new Pagination();
+		pagination.setPageNumber(pageInfo.getPageNum());
+		pagination.setPageSize(pageInfo.getPageSize());
+		pagination.setTotalCount(pageInfo.getTotal());
+		pagination.setTotalPages(pageInfo.getPages());
+		pagination.setRows(pageInfo.getList());
 		return pagination;
 	}
 

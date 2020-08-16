@@ -1,5 +1,7 @@
 package com.luxiu.spring.conf.page;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,45 +21,59 @@ public class Pagination<T> implements Serializable {
 	private static final long serialVersionUID = -5626846339655628738L;
 
 	// 总条数
-	private Integer totalCount;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private Long totalCount;
 
 	// 总页数
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer totalPages;
 
 	// 当前页码从1开始
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer pageNumber;
 
 	// 每页条数
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer pageSize;
 
 	// oracle分页起始行
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer begin;
 
 	// oracle分页结束行
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer end;
 
 	// 前一页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer prePage;
 
 	// 是否首页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Boolean firstPage;
 
 	// 是否末页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Boolean lastPage;
 
 	// 下一页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer nextPage;
 
 	// 偏移量
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer offset;
 
 	// 是否有下页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Boolean hasNextPage;
 
 	// 是否有上页
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Boolean hasPrePage;
 
 	// 当前页从第几条开始查
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer startRow;
 
 	// 返回数据
@@ -66,11 +82,11 @@ public class Pagination<T> implements Serializable {
 	public Pagination() {
 	}
 
-	public Integer getTotalCount() {
+	public Long getTotalCount() {
 		return totalCount;
 	}
 
-	public void setTotalCount(Integer totalCount) {
+	public void setTotalCount(Long totalCount) {
 		this.totalCount = totalCount;
 	}
 
