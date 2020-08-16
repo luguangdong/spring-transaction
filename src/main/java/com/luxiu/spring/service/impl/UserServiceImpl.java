@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Pagination<User> page(int current, int size, Object value) {
-		// 执行count(*)操作
-		PageHelper.startPage(current, size, true);
+		//执行count(*)操作
+		PageHelper.startPage(current,size,true);
 		List<User> userList = userMapper.findByConditions((User) value);
 		PageInfo pageInfo = new PageInfo(userList);
 		Pagination pagination = pageInfo2Pagination(pageInfo);

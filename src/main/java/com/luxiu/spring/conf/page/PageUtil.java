@@ -1,5 +1,6 @@
 package com.luxiu.spring.conf.page;
 
+
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -64,7 +65,7 @@ public class PageUtil {
 	}
 
 	/**
-	 * pagehelper中的PageInfo对象转换自定义Pagination对象
+	 *  pagehelper中的PageInfo对象转换自定义Pagination对象
 	 * @param pageInfo
 	 * @return
 	 */
